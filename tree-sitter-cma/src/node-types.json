@@ -1,0 +1,60 @@
+[
+  {
+    "type": "instruction",
+    "named": true,
+    "fields": {
+      "mnemonic": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "load",
+            "named": false
+          },
+          {
+            "type": "loadc",
+            "named": false
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "instruction",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "load",
+    "named": false
+  },
+  {
+    "type": "loadc",
+    "named": false
+  },
+  {
+    "type": "number",
+    "named": true
+  }
+]

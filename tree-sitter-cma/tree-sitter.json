@@ -1,0 +1,38 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "cma",
+      "camelcase": "CMa",
+      "title": "CMa",
+      "scope": "source.cma",
+      "file-types": [
+        "cma"
+      ],
+      "injection-regex": "^cma$",
+      "class-name": "TreeSitterCma"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Nice C to CMa Parser",
+    "authors": [
+      {
+        "name": "Leofanamed"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/Matographo/Compilerbau"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
