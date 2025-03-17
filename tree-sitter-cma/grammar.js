@@ -10,6 +10,11 @@
 module.exports = grammar({
   name: "cma",
 
+  extras: $ => [
+    token(/\s+/),  // handles whitespace as token
+    $.comment
+  ],
+
   rules: {
     source_file: ($) => repeat($.instruction),
 
@@ -45,10 +50,5 @@ module.exports = grammar({
     number: ($) => /-?\d+/,
 
     comment: ($) => token(seq("//", /.*/)),
-
-    extras: ($) => [
-      token(/\s+/),  // handles whitespace as token
-      $.comment
-    ],
   },
 });
