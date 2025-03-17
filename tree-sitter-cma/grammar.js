@@ -1,6 +1,6 @@
 /**
  * @file Nice C to CMa Parser
- * @author Leofanamed
+ * @authors Leofanamed & Michael Jordan
  * @license MIT
  */
 
@@ -11,52 +11,44 @@ module.exports = grammar({
   name: "cma",
 
   rules: {
-    // TODO: add the actual grammar rules
     source_file: ($) => repeat($.instruction),
 
-    tokens: ($) =>
+    // instructions are separated into two:
+    // 1. instructions without operands ('halt', 'add', etc.)
+    // 2. instructions with operands (loadc 5', 'jump 10', etc.)
+    // it makes the grammar clearer, to ensure correct pasring,
+    // also produces an intuitive abstarct syntax tree
+
+    instruction: ($) =>
       choice(
-        "load",
-        seq("loadc", $.number),
-        "store",
-        "add",
-        "sub",
-        "mul",
-        "div",
-        "mod",
-        "and",
-        "or",
-        "xor",
-        "not",
-        "eq",
-        "neq",
-        "le",
-        "leq",
-        "gr",
-        "geq",
-        seq("jump", $.number),
-        seq("jumpz", $.number),
-        seq("call", $.number),
-        "return",
-        "halt",
-        seq("alloc", $.number),
-        "pop",
-        seq("loada", $.number),
-        seq("storea", $.number),
-        "dup",
-        "new",
-        "mark",
-        seq("move", $.number),
-        seq("enter", $.number),
-        seq("loadrc", $.number),
-        seq("loadr", $.number),
-        seq("storer", $.number)
+        $.simple_instruction,
+        $.instruction_with_operand
       ),
 
-    instruction: ($) => choice(seq($.tokens, $.number)),
+    // without operands
+    simple_instruction: ($) =>
+      choice(
+        "load", "store", "add", "sub", "mul", "div", "mod",
+        "and", "or", "xor", "not", "eq", "neq", "le", "leq",
+        "gr", "geq", "return", "halt", "pop", "dup", "new", "mark"
+      ),
 
-    identifier: ($) => /[a-z]+/,
+    instruction_with_operand: ($) =>
+      seq($.mnemonic_with_operand, $.number),
 
-    number: ($) => /[-]?\d+/,
+    mnemonic_with_operand: ($) =>
+      choice(
+        "loadc", "jump", "jumpz", "call", "alloc", "loada",
+        "storea", "move", "enter", "loadrc", "loadr", "storer"
+      ),
+
+    number: ($) => /-?\d+/,
+
+    comment: ($) => token(seq("//", /.*/)),
+
+    extras: ($) => [
+      token(/\s+/),  // handles whitespace as token
+      $.comment
+    ],
   },
 });
