@@ -1,5 +1,100 @@
 [
   {
+    "type": "assignment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "binary_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "brecket_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "binary_expression",
+          "named": true
+        },
+        {
+          "type": "brecket_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -9,169 +104,77 @@
       "required": false,
       "types": [
         {
-          "type": "tokens",
+          "type": "statement",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "tokens",
+    "type": "statement",
     "named": true,
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "number",
+          "type": "assignment",
+          "named": true
+        },
+        {
+          "type": "declaration",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "add",
+    "type": "%",
     "named": false
   },
   {
-    "type": "alloc",
+    "type": "(",
     "named": false
   },
   {
-    "type": "and",
+    "type": ")",
     "named": false
   },
   {
-    "type": "call",
+    "type": "*",
     "named": false
   },
   {
-    "type": "div",
+    "type": "+",
     "named": false
   },
   {
-    "type": "dup",
+    "type": "-",
     "named": false
   },
   {
-    "type": "enter",
+    "type": "/",
     "named": false
   },
   {
-    "type": "eq",
+    "type": ";",
     "named": false
   },
   {
-    "type": "geq",
+    "type": "=",
     "named": false
   },
   {
-    "type": "gr",
-    "named": false
+    "type": "identifier",
+    "named": true
   },
   {
-    "type": "halt",
-    "named": false
-  },
-  {
-    "type": "jump",
-    "named": false
-  },
-  {
-    "type": "jumpz",
-    "named": false
-  },
-  {
-    "type": "le",
-    "named": false
-  },
-  {
-    "type": "leq",
-    "named": false
-  },
-  {
-    "type": "load",
-    "named": false
-  },
-  {
-    "type": "loada",
-    "named": false
-  },
-  {
-    "type": "loadc",
-    "named": false
-  },
-  {
-    "type": "loadr",
-    "named": false
-  },
-  {
-    "type": "loadrc",
-    "named": false
-  },
-  {
-    "type": "mark",
-    "named": false
-  },
-  {
-    "type": "mod",
-    "named": false
-  },
-  {
-    "type": "move",
-    "named": false
-  },
-  {
-    "type": "mul",
-    "named": false
-  },
-  {
-    "type": "neq",
-    "named": false
-  },
-  {
-    "type": "new",
-    "named": false
-  },
-  {
-    "type": "not",
+    "type": "int",
     "named": false
   },
   {
     "type": "number",
     "named": true
-  },
-  {
-    "type": "or",
-    "named": false
-  },
-  {
-    "type": "pop",
-    "named": false
-  },
-  {
-    "type": "return",
-    "named": false
-  },
-  {
-    "type": "store",
-    "named": false
-  },
-  {
-    "type": "storea",
-    "named": false
-  },
-  {
-    "type": "storer",
-    "named": false
-  },
-  {
-    "type": "sub",
-    "named": false
-  },
-  {
-    "type": "xor",
-    "named": false
   }
 ]

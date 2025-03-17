@@ -8,55 +8,76 @@
 // @ts-check
 
 module.exports = grammar({
-  name: "cma",
+  name: "c",
 
   rules: {
     // TODO: add the actual grammar rules
-    source_file: ($) => repeat($.tokens),
+    source_file: ($) => repeat($.statement),
 
-    tokens: ($) =>
+    statement: ($) => 
       choice(
-        "load",
-        seq("loadc", $.number),
-        "store",
-        "add",
-        "sub",
-        "mul",
-        "div",
-        "mod",
-        "and",
-        "or",
-        "xor",
-        "not",
-        "eq",
-        "neq",
-        "le",
-        "leq",
-        "gr",
-        "geq",
-        seq("jump", $.number),
-        seq("jumpz", $.number),
-        seq("call", $.number),
-        "return",
-        "halt",
-        seq("alloc", $.number),
-        "pop",
-        seq("loada", $.number),
-        seq("storea", $.number),
-        "dup",
-        "new",
-        "mark",
-        seq("move", $.number),
-        seq("enter", $.number),
-        seq("loadrc", $.number),
-        seq("loadr", $.number),
-        seq("storer", $.number)
+        $.declaration,
+        $.assignment
       ),
 
-    instruction: ($) => choice(seq($.tokens, $.number)),
+    assignment: ($) =>
+      seq(
+        $.identifier,
+        "=",
+        $.expression,
+        ";"
+      ),
 
-    identifier: ($) => /[a-z]+/,
+    declaration: ($) =>
+      choice(
+        seq(
+          "int",
+          $.identifier,
+          "=",
+          $.expression,
+          ";"
+        ),
+        seq(
+          "int",
+          $.identifier,
+          ";"
+        )
+      ),
 
-    number: ($) => /[-]?\d+/,
-  },
+    expression: ($) =>
+      choice(
+        $.identifier,
+        $.number,
+        $.brecket_expression,
+        $.binary_expression
+      ),
+
+    declararation: ($) =>
+      seq(
+        "int",
+        $.identifier,
+        "=",
+        $.expression,
+        ";"
+      ),
+
+    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+
+    number: ($) => /\d+/,
+    
+    brecket_expression: ($) =>
+      seq(
+        "(",
+        $.expression,
+        ")"
+      ),
+
+    binary_expression: ($) =>
+      prec.left(
+      seq(
+        $.expression,
+        choice("+", "-", "*", "/", "%"),
+        $.expression
+      )),
+  }
 });

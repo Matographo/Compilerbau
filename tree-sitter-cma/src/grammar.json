@@ -1,108 +1,73 @@
 {
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
-  "name": "cma",
+  "name": "c",
   "rules": {
     "source_file": {
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "tokens"
+        "name": "statement"
       }
     },
-    "tokens": {
+    "statement": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "load"
+          "type": "SYMBOL",
+          "name": "declaration"
         },
+        {
+          "type": "SYMBOL",
+          "name": "assignment"
+        }
+      ]
+    },
+    "assignment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "declaration": {
+      "type": "CHOICE",
+      "members": [
         {
           "type": "SEQ",
           "members": [
             {
               "type": "STRING",
-              "value": "loadc"
+              "value": "int"
             },
             {
               "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "store"
-        },
-        {
-          "type": "STRING",
-          "value": "add"
-        },
-        {
-          "type": "STRING",
-          "value": "sub"
-        },
-        {
-          "type": "STRING",
-          "value": "mul"
-        },
-        {
-          "type": "STRING",
-          "value": "div"
-        },
-        {
-          "type": "STRING",
-          "value": "mod"
-        },
-        {
-          "type": "STRING",
-          "value": "and"
-        },
-        {
-          "type": "STRING",
-          "value": "or"
-        },
-        {
-          "type": "STRING",
-          "value": "xor"
-        },
-        {
-          "type": "STRING",
-          "value": "not"
-        },
-        {
-          "type": "STRING",
-          "value": "eq"
-        },
-        {
-          "type": "STRING",
-          "value": "neq"
-        },
-        {
-          "type": "STRING",
-          "value": "le"
-        },
-        {
-          "type": "STRING",
-          "value": "leq"
-        },
-        {
-          "type": "STRING",
-          "value": "gr"
-        },
-        {
-          "type": "STRING",
-          "value": "geq"
-        },
-        {
-          "type": "SEQ",
-          "members": [
+              "name": "identifier"
+            },
             {
               "type": "STRING",
-              "value": "jump"
+              "value": "="
             },
             {
               "type": "SYMBOL",
-              "name": "number"
+              "name": "expression"
+            },
+            {
+              "type": "STRING",
+              "value": ";"
             }
           ]
         },
@@ -111,182 +76,132 @@
           "members": [
             {
               "type": "STRING",
-              "value": "jumpz"
+              "value": "int"
             },
             {
               "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
+              "name": "identifier"
+            },
             {
               "type": "STRING",
-              "value": "call"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "return"
-        },
-        {
-          "type": "STRING",
-          "value": "halt"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "alloc"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "pop"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "loada"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "storea"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "dup"
-        },
-        {
-          "type": "STRING",
-          "value": "new"
-        },
-        {
-          "type": "STRING",
-          "value": "mark"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "move"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "enter"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "loadrc"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "loadr"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "storer"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
+              "value": ";"
             }
           ]
         }
       ]
     },
-    "instruction": {
+    "expression": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "tokens"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "brecket_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binary_expression"
+        }
+      ]
+    },
+    "declararation": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "int"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[a-z]+"
+      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
     },
     "number": {
       "type": "PATTERN",
-      "value": "[-]?\\d+"
+      "value": "\\d+"
+    },
+    "brecket_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "binary_expression": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "+"
+              },
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "STRING",
+                "value": "*"
+              },
+              {
+                "type": "STRING",
+                "value": "/"
+              },
+              {
+                "type": "STRING",
+                "value": "%"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        ]
+      }
     }
   },
   "extras": [
