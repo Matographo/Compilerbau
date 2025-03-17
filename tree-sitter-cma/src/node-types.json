@@ -1,35 +1,5 @@
 [
   {
-    "type": "instruction",
-    "named": true,
-    "fields": {
-      "mnemonic": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "load",
-            "named": false
-          },
-          {
-            "type": "loadc",
-            "named": false
-          }
-        ]
-      },
-      "operand": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "number",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -39,14 +9,93 @@
       "required": false,
       "types": [
         {
-          "type": "instruction",
+          "type": "tokens",
           "named": true
         }
       ]
     }
   },
   {
+    "type": "tokens",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "add",
+    "named": false
+  },
+  {
+    "type": "alloc",
+    "named": false
+  },
+  {
+    "type": "and",
+    "named": false
+  },
+  {
+    "type": "call",
+    "named": false
+  },
+  {
+    "type": "div",
+    "named": false
+  },
+  {
+    "type": "dup",
+    "named": false
+  },
+  {
+    "type": "enter",
+    "named": false
+  },
+  {
+    "type": "eq",
+    "named": false
+  },
+  {
+    "type": "geq",
+    "named": false
+  },
+  {
+    "type": "gr",
+    "named": false
+  },
+  {
+    "type": "halt",
+    "named": false
+  },
+  {
+    "type": "jump",
+    "named": false
+  },
+  {
+    "type": "jumpz",
+    "named": false
+  },
+  {
+    "type": "le",
+    "named": false
+  },
+  {
+    "type": "leq",
+    "named": false
+  },
+  {
     "type": "load",
+    "named": false
+  },
+  {
+    "type": "loada",
     "named": false
   },
   {
@@ -54,7 +103,75 @@
     "named": false
   },
   {
+    "type": "loadr",
+    "named": false
+  },
+  {
+    "type": "loadrc",
+    "named": false
+  },
+  {
+    "type": "mark",
+    "named": false
+  },
+  {
+    "type": "mod",
+    "named": false
+  },
+  {
+    "type": "move",
+    "named": false
+  },
+  {
+    "type": "mul",
+    "named": false
+  },
+  {
+    "type": "neq",
+    "named": false
+  },
+  {
+    "type": "new",
+    "named": false
+  },
+  {
+    "type": "not",
+    "named": false
+  },
+  {
     "type": "number",
     "named": true
+  },
+  {
+    "type": "or",
+    "named": false
+  },
+  {
+    "type": "pop",
+    "named": false
+  },
+  {
+    "type": "return",
+    "named": false
+  },
+  {
+    "type": "store",
+    "named": false
+  },
+  {
+    "type": "storea",
+    "named": false
+  },
+  {
+    "type": "storer",
+    "named": false
+  },
+  {
+    "type": "sub",
+    "named": false
+  },
+  {
+    "type": "xor",
+    "named": false
   }
 ]
