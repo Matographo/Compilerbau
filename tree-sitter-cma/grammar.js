@@ -1,6 +1,6 @@
 /**
  * @file Nice C to CMa Parser
- * @author Leofanamed
+ * @authors Leofanamed & Michael Jordan
  * @license MIT
  */
 
@@ -11,73 +11,158 @@ module.exports = grammar({
   name: "c",
 
   rules: {
-    // TODO: add the actual grammar rules
     source_file: ($) => repeat($.statement),
 
-    statement: ($) => 
-      choice(
-        $.declaration,
-        $.assignment
+    toplevel: ($) => choice(
+      $.function_definition,
+      $.declaration,
+      $.struct_definition,
+    ),
+
+    // Top-level statements
+    statement: ($) => choice(
+      $.declaration,
+      $.assignment,
+      $.expression_statement,
+      $.function_definition,
+      $.return_statement,
+      $.if_statement,
+      $.while_statement,
+      $.for_statement,
+      $.struct_definition
+    ),
+
+    // int x = 5;
+    declaration: ($) =>
+      seq(
+        field('type', $.type),
+        optional('*'),
+        field('name', $.identifier),
+        optional(seq('=', field('value', $.expression))),
+        ';'
       ),
 
+    // x = 5;
     assignment: ($) =>
       seq(
-        $.identifier,
-        "=",
-        $.expression,
-        ";"
+        field('name', $.identifier),
+        '=',
+        field('value', $.expression),
+        ';'
       ),
 
-    declaration: ($) =>
-      choice(
-        seq(
-          "int",
-          $.identifier,
-          "=",
-          $.expression,
-          ";"
-        ),
-        seq(
-          "int",
-          $.identifier,
-          ";"
-        )
-      ),
+    // function(); or (a + b);
+    expression_statement: ($) =>
+      seq($.expression, ';'),
 
+    // Expressions: numbers, vars, math, function calls, usw.
     expression: ($) =>
       choice(
-        $.identifier,
         $.number,
-        $.brecket_expression,
-        $.binary_expression
-      ),
-
-    declararation: ($) =>
-      seq(
-        "int",
         $.identifier,
-        "=",
-        $.expression,
-        ";"
+        $.function_call,
+        $.binary_expression,
+        $.unary_expression,
+        $.bracket_expression,
+        $.array_access,
+        $.struct_access,
+        $.pointer_access
       ),
 
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
-
-    number: ($) => /\d+/,
-    
-    brecket_expression: ($) =>
+    function_call: ($) =>
       seq(
-        "(",
-        $.expression,
-        ")"
+        field('name', $.identifier),
+        '(',
+        optional(commaSep($.expression)),
+        ')'
       ),
+
+    function_definition: ($) =>
+      seq(
+        field('return_type', $.type),
+        field('name', $.identifier),
+        '(',
+        optional($.parameter_list),
+        ')',
+        $.block
+      ),
+
+    parameter_list: ($) =>
+      commaSep(seq($.type, optional('*'), $.identifier)),
+
+    block: ($) =>
+      seq('{', repeat($.statement), '}'),
+
+    return_statement: ($) =>
+      seq('return', optional($.expression), ';'),
+
+    if_statement: ($) =>
+      seq(
+        'if', '(', $.expression, ')',
+        $.block,
+        optional(seq('else', choice($.block, $.if_statement)))
+      ),
+
+    while_statement: ($) =>
+      seq('while', '(', $.expression, ')', $.block),
+
+    for_statement: ($) =>
+      seq(
+        'for', '(', optional($.assignment), optional($.expression), ';', optional($.expression), ')',
+        $.block
+      ),
+
+    struct_definition: ($) =>
+      seq(
+        'struct',
+        $.identifier,
+        '{',
+        repeat($.declaration),
+        '}',
+        ';'
+      ),
+
+    // a.b
+    struct_access: ($) =>
+      seq($.identifier, '.', $.identifier),
+
+    // a[5] or 5[a]
+    array_access: ($) =>
+      choice(
+        seq($.identifier, '[', $.expression, ']'),
+        seq($.expression, '[', $.identifier, ']')
+      ),
+
+    // *i
+    pointer_access: ($) =>
+      seq('*', $.identifier),
+
+    // (a + b)
+    bracket_expression: ($) =>
+      seq('(', $.expression, ')'),
 
     binary_expression: ($) =>
-      prec.left(
-      seq(
+      prec.left(seq(
         $.expression,
-        choice("+", "-", "*", "/", "%"),
+        choice('+', '-', '*', '/', '%', '<', '>', '<=', '>=', '==', '!=', '&&', '||'),
         $.expression
       )),
+
+    unary_expression: ($) =>
+      prec(1, seq(
+        choice('!', '-', '*'),
+        $.expression
+      )),
+
+    type: ($) => choice('int'),
+
+    identifier: ($) => /[a-zA-Z_]\w*/,
+
+    number: ($) => /\d+/,
   }
 });
+
+// Helper for comma-separated lists
+function commaSep(rule) {
+  return seq(rule, repeat(seq(',', rule)));
+}
