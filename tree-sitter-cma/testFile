@@ -35,7 +35,7 @@
                         `1`
                 "*"
                 expression 
-                  brecket_expression 
+                  bracket_expression 
                     "("
                     expression 
                       binary_expression 
@@ -52,4 +52,3 @@
               number 
                 `2`
         ";"
-

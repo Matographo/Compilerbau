@@ -1,8 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Node {
 
-	private Node parent;
-	private List<Node> children;
-	private String value;
+	protected Node parent;
+	protected List<Node> children;
+	protected String value;
 
 	public Node(String value, Node parent) {
 		this.value = value;
@@ -11,7 +14,9 @@ public abstract class Node {
 	}
 
 	public Node(String value) {
-		this(null);
+		this.value = value;
+		this.parent = null;
+		children = new ArrayList<>();
 	}
 
 	public Node getParent() {

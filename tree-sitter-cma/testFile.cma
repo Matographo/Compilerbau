@@ -1,0 +1,17 @@
+loadc 5
+storea 5
+
+loadc 0
+storea 6
+
+loada 5
+loadc 1
+add
+loadc 7
+loadc 3
+sub
+mul
+loadc 2
+div
+storea 6
+
