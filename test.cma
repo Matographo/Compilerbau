@@ -2,7 +2,6 @@ loadc 0
 loadc 5
 storea 0
 pop
-pop
 
 mark
 loadc _fmain
