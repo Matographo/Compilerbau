@@ -1,0 +1,158 @@
+loadc 0
+loadc 5
+storea 0
+pop
+
+loadc 0
+loadc 1
+new
+storea 1
+pop
+
+mark
+loadc _fmain
+call
+halt
+_ffoo:
+enter 5
+alloc 0
+loadc 10
+storea 1
+
+loada 0
+
+storer -3
+
+return
+
+_fbarr:
+enter 5
+alloc 0
+loada a
+load
+storer -3
+
+return
+
+_fbar:
+enter 5
+alloc 0
+loadc 10
+loada 0
+
+
+return
+
+_fmain:
+enter 5
+alloc 0
+mark
+loadc _ffoo
+call 0
+loadc 1
+storeloadc 1
+add
+storea 1
+
+loadc 10
+storea 2
+
+loadc 10
+storea 3
+
+loadc 5
+loadc 2
+loadc SP
+add
+load
+
+loadc 0
+add
+store
+loadc 2
+loadc SP
+add
+load
+
+loadc 0
+add
+store
+
+loadc 10
+loadc 2
+loadc SP
+add
+load
+
+loadc 1
+add
+store
+loadc 2
+loadc SP
+add
+load
+
+loadc 1
+add
+store
+
+loadc 1
+loadc SP
+add
+load
+
+loadc 5
+gt
+jumpz _j3
+loadc 1
+loadc SP
+add
+load
+
+loadc 5
+gt
+_j3:
+if_j2:
+
+loadc 10
+loada p
+load
+
+mark
+loadc _fbar
+call 0
+loadc 1
+store
+pop
+
+_j8:
+loadc 1
+jumpz _j9
+loada 0
+
+loadc 1
+add
+loada 0
+
+
+loada 0
+
+loadc 100
+gt
+jumpz _j11
+loada 0
+
+loadc 100
+gt
+_j11:
+
+
+jump _j8
+_j9:
+
+loada 0
+
+storer -3
+
+return
+

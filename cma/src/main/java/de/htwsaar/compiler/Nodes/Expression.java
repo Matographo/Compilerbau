@@ -16,8 +16,7 @@ public class Expression extends Node {
 			builder.append("\n");
 			return builder.toString();
 		} else if (children.get(0).value.equals(CodeConstants.IDENTIFIER)) {
-			builder.append("loada ");
-			builder.append(children.get(0).generate());
+			builder.append(VarDecMap.getVarDec(children.get(0).generate()));
 			builder.append("\n");
 			return builder.toString();
 		}

@@ -17,27 +17,20 @@
   {
     "type": "assignment",
     "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "lvalue",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -86,39 +79,31 @@
     }
   },
   {
+    "type": "break_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "declaration",
     "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "type",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -196,11 +181,15 @@
           "named": true
         },
         {
-          "type": "block",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "ldeclaration",
+          "named": true
+        },
+        {
+          "type": "loopBlock",
           "named": true
         }
       ]
@@ -209,24 +198,59 @@
   {
     "type": "function_call",
     "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gdeclaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration",
           "named": true
         }
       ]
@@ -247,10 +271,6 @@
         {
           "type": "expression",
           "named": true
-        },
-        {
-          "type": "if_statement",
-          "named": true
         }
       ]
     }
@@ -265,6 +285,71 @@
       "types": [
         {
           "type": "declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "loopBlock",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "break_statement",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lvalue",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "array_access",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "pointer_access",
+          "named": true
+        },
+        {
+          "type": "struct_access",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "parameter_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type",
           "named": true
         }
       ]
@@ -310,7 +395,7 @@
       "required": false,
       "types": [
         {
-          "type": "statement",
+          "type": "toplevel",
           "named": true
         }
       ]
@@ -371,6 +456,53 @@
     }
   },
   {
+    "type": "struct_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "declaration",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "toplevel",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "function_definition",
+          "named": true
+        },
+        {
+          "type": "gdeclaration",
+          "named": true
+        },
+        {
+          "type": "struct_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "type",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "unary_expression",
     "named": true,
     "fields": {},
@@ -398,11 +530,11 @@
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "expression",
+          "type": "loopBlock",
           "named": true
         }
       ]
@@ -501,6 +633,10 @@
     "named": false
   },
   {
+    "type": "break",
+    "named": false
+  },
+  {
     "type": "else",
     "named": false
   },
@@ -517,6 +653,10 @@
     "named": false
   },
   {
+    "type": "int",
+    "named": false
+  },
+  {
     "type": "number",
     "named": true
   },
@@ -525,8 +665,12 @@
     "named": false
   },
   {
-    "type": "type",
-    "named": true
+    "type": "struct",
+    "named": false
+  },
+  {
+    "type": "void",
+    "named": false
   },
   {
     "type": "while",

@@ -1,10 +1,17 @@
+loadc 0
 loadc 5
-storea 5
+storea 0
+pop
+mark
+loadc func
+call
 
 loadc 0
-storea 6
+storea y
 
-loada 5
+func:
+
+loada x
 loadc 1
 add
 loadc 7
@@ -13,5 +20,5 @@ sub
 mul
 loadc 2
 div
-storea 6
+storea y
 

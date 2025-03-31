@@ -11,7 +11,7 @@ module.exports = grammar({
   name: "c",
 
   rules: {
-    source_file: ($) => repeat($.statement),
+    source_file: ($) => repeat($.toplevel),
 
     toplevel: ($) =>
       choice($.function_definition, $.gdeclaration, $.struct_definition),
@@ -34,17 +34,24 @@ module.exports = grammar({
 
     // int x = 5;
     declaration: ($) =>
-      seq(
-        field("type", $.type),
-        optional("*"),
-        field("name", $.identifier),
-        optional(seq("=", field("value", $.expression))),
-        ";"
+      choice(
+        seq($.type, $.identifier, optional(seq("=", $.expression)), ";"),
+        seq($.type, "*", $.identifier, ";"),
+        seq($.type, $.identifier, "[", $.expression, "]", ";")
       ),
 
+    lvalue: ($) =>
+      choice($.identifier, $.array_access, $.pointer_access, $.struct_access),
+
     // x = 5;
-    assignment: ($) =>
-      seq(field("name", $.identifier), "=", field("value", $.expression), ";"),
+    assignment: ($) => seq($.lvalue, "=", $.expression, ";"),
+
+    assignment_id: ($) => choice(
+      $.identifier,
+      $.array_access,
+      $.struct_access,
+      $.pointer_access
+    ),
 
     // function(); or (a + b);
     expression_statement: ($) => seq($.expression, ";"),
@@ -64,26 +71,17 @@ module.exports = grammar({
       ),
 
     function_call: ($) =>
-      seq(
-        field("name", $.identifier),
-        "(",
-        optional(commaSep($.expression)),
-        ")"
-      ),
+      seq($.identifier, "(", optional(commaSep($.expression)), ")"),
 
     function_definition: ($) =>
-      seq(
-        field("return_type", $.type),
-        field("name", $.identifier),
-        "(",
-        optional($.parameter_list),
-        ")",
-        $.block
-      ),
+      seq($.type, $.identifier, "(", optional($.parameter_list), ")", $.block),
 
     parameter_list: ($) => commaSep(seq($.type, optional("*"), $.identifier)),
 
     block: ($) => seq("{", repeat($.statement), "}"),
+
+    loopBlock: ($) =>
+      seq("{", repeat(choice($.statement, prec(5, $.break_statement))), "}"),
 
     return_statement: ($) => seq("return", optional($.expression), ";"),
 
@@ -94,22 +92,23 @@ module.exports = grammar({
         $.expression,
         ")",
         $.block,
-        optional(seq("else", choice($.block, $.if_statement)))
+        optional(repeat(seq("else", "if", "(", $.expression, ")", $.block))),
+        optional(choice(seq("else", $.block)))
       ),
 
-    while_statement: ($) => seq("while", "(", $.expression, ")", $.block),
+    while_statement: ($) => seq("while", "(", $.expression, ")", $.loopBlock),
 
     for_statement: ($) =>
       seq(
         "for",
         "(",
-        optional($.assignment),
+        optional(choice($.ldeclaration, $.assignment)),
         ";",
-        optional($.expression),
+        $.expression,
         ";",
         optional($.expression),
         ")",
-        $.block
+        $.loopBlock,
       ),
 
     struct_definition: ($) =>
@@ -150,6 +149,8 @@ module.exports = grammar({
         )
       ),
 
+    break_statement: ($) => seq("break", ";"),
+
     unary_expression: ($) =>
       choice(
         prec(1, seq(choice("!", "-", "*"), $.expression)),
@@ -157,7 +158,7 @@ module.exports = grammar({
         prec(2, seq($.identifier, choice("++", "--")))
       ),
 
-    type: ($) => "int",
+    type: ($) => choice("int", "void"),
 
     identifier: ($) => /[a-zA-Z_]+[a-zA-Z0-9_]*/,
 

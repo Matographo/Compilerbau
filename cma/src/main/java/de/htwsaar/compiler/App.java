@@ -16,7 +16,7 @@ public class App {
 	private static final int BUFFER_SIZE = 1024;
 
 	public static void main(String[] args) {
-		args = new String[] { "/home/leodora/Documents/Dev/Uni/Compilerbau/Compilerbau/tree-sitter-cma/testFile" };
+		args = new String[] { "/home/leodora/Documents/Dev/Uni/Compilerbau/Compilerbau/tree-sitter-cma/testFilec" };
 		new App().start(args);
 	}
 
@@ -41,6 +41,7 @@ public class App {
 
 			String line;
 			while ((line = reader.readLine()) != null) {
+				if(line.trim().isEmpty()) continue;
 				lines.add(line.substring(2));
 			}
 			reader.close();
@@ -85,9 +86,6 @@ public class App {
 				while (current.getDepth() > currentDepth) {
 					current = current.getParent();
 				}
-				// for (int j = 0; j < current.getDepth() - currentDepth + 1; j++) {
-				// current = current.getParent();
-				// }
 				Node parentNode = current.getParent();
 				Node newNode = createNode(line, parentNode);
 				parentNode.addNode(newNode);
@@ -110,6 +108,25 @@ public class App {
 			case CodeConstants.ROOT -> new Root(line);
 			case CodeConstants.NUMBER -> new Number(line, parent);
 			case CodeConstants.STATEMENT -> new Statement(line, parent);
+			case CodeConstants.TYPE -> new NullValue(line, parent);
+			case CodeConstants.UNARY_EXPRESSION -> new UnaryExpression(line, parent);
+			case CodeConstants.FUNCTION_DEFINITION -> new FunctionDefinitin(line, parent);
+			case CodeConstants.FUNCTION_CALL -> new FunctionCall(line, parent);
+			case CodeConstants.PARAM_LIST -> new NullValue(line, parent);
+			case CodeConstants.TOP_LEVEL -> new Toplevel(line, parent);
+			case CodeConstants.BLOCK -> new Block(line, parent);
+			case CodeConstants.L_DECLARATION -> new LDeclaration(line, parent);
+			case CodeConstants.IF_CONDITION -> new IfCondition(line, parent);
+			case CodeConstants.IF -> new ValueNode(line, parent);
+			case CodeConstants.ELSE -> new ValueNode(line, parent);
+			case CodeConstants.G_DECLARATION -> new GDeclaration(line, parent);
+			case CodeConstants.WHILE -> new While(line, parent);
+			case CodeConstants.RETURN_STATEMENT -> new ReturnStatement(line, parent);
+			case CodeConstants.POINTER_ACCESS -> new PointerAccess(line, parent);
+			case CodeConstants.LOOP_BLOCK -> new Block(line, parent);
+			case CodeConstants.L_VALUE -> new LValue(line, parent);
+			case CodeConstants.EXPRESSION_STATEMENT -> new ExpressionStatement(line, parent);
+			case CodeConstants.ARRAY_ACCESS -> new ArrayAccess(line, parent);
 			default -> new ValueNode(line, parent);
 		};
 	}

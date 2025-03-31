@@ -10,7 +10,7 @@ public class IdentifyerLeft extends Node {
 
 	@Override
 	public String generate() {
-		return VarDecMap.getGlobal(children.get(0).generate());
+		return children.get(0).generate();
 	}
 
 }

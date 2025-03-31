@@ -14,9 +14,13 @@ public class Assignment extends Node {
 	public String generate() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(getExpression());
-		builder.append("storea ");
-		builder.append(children.get(0).generate());
-		builder.append("\n");
+		if(!children.get(0).getValue().equals("lvalue")){
+			builder.append("storea ");
+			builder.append(children.get(0).generate());
+			builder.append("\n");
+		} else {
+			builder.append(children.get(0).generate());
+		}
 		return builder.toString();
 	}
 
