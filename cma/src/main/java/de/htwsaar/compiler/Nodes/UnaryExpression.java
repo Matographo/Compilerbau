@@ -20,6 +20,7 @@ public class UnaryExpression extends Node {
 			builder.append(getExpressionType(children.get(1).generate()));
 			builder.append("storea ");
 			builder.append(children.get(0).generate());
+			builder.append("pop\n");
 			// prefix
 		} else if (children.get(1).getValue().equals(CodeConstants.IDENTIFIER)) {
 			builder.append(VarDecMap.getVarDec(children.get(1).generate()));
@@ -29,6 +30,7 @@ public class UnaryExpression extends Node {
 			builder.append("dup\n");
 			builder.append("storea ");
 			builder.append(children.get(1).generate());
+			builder.append("pop\n");
 			// negation
 		} else if (children.get(1).getValue().equals(CodeConstants.EXPRESSION)) {
 			builder.append(children.get(1).generate());

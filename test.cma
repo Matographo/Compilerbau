@@ -1,11 +1,37 @@
 loadc 0
+loadc 5
+storea 0
+pop
+pop
+
 mark
-loadc hallo
+loadc _fmain
 call
 halt
-loadc 5
-hallo:
-loadc 5
-loadc 4
+_fmain:
+enter 5
+alloc 1
+loadc 10
+loada 0
+
+
+loadc 15
+loadc FP
+loadc 1
 add
+store
+
+pop
+
+loada 0
+
+loadc 1
+loadc SP
+add
+load
+
+mul
+storer -3
+
 return
+

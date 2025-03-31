@@ -18,6 +18,7 @@ public class Assignment extends Node {
 			builder.append("storea ");
 			builder.append(children.get(0).generate());
 			builder.append("\n");
+			builder.append("pop\n");
 		} else {
 			builder.append(children.get(0).generate());
 		}

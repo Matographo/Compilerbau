@@ -1,0 +1,12 @@
+loadc 0
+mark
+loadc hallo
+call
+halt
+loadc 5
+hallo:
+loadc 5
+loadc 4
+add
+storer -3
+return

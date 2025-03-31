@@ -63,7 +63,7 @@ public class FunctionDefinitin extends Node {
     private String getAlloc() {
         StringBuilder builder = new StringBuilder();
         builder.append("alloc ");
-        builder.append(getLocalVarCount());
+        builder.append(getAllVar().size());
         builder.append("\n");
         return builder.toString();
 

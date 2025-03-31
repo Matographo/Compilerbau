@@ -12,15 +12,21 @@ public class Declaration extends Node {
 	public String generate() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(getExpression());
-		builder.append("storea ");
 		if (parent.getValue().equals(CodeConstants.G_DECLARATION)) {
+			builder.append("storea ");
 			builder.append(VarDecMap.getGlobal(children.get(1).generate()));
 		} else {
 			String funcName = parent.getParent().getParent().getParent().getChildren().get(1).generate();
+			builder.append("loadc FP\n");
+			builder.append("loadc ");
 			builder.append(VarDecMap.getLocalVar(funcName, children.get(1).generate()));
+			builder.append("\n");
+			builder.append("add\n");
+			builder.append("store\n");
 		}
 		// builder.append(children.get(1).generate());
 		builder.append("\n");
+		builder.append("pop\n");
 		return builder.toString();
 	}
 

@@ -15,6 +15,7 @@ public class ArrayAccess extends Node {
         builder.append(second);
         builder.append("add\n");
         builder.append("store\n");
+	builder.append("pop\n");
         return builder.toString();
     }
 

@@ -12,7 +12,7 @@ public class FunctionCall extends Node {
     @Override
     public String generate() {
         StringBuilder builder = new StringBuilder();
-
+        builder.append("loadc 0\n");
         builder.append("mark\n");
         builder.append(calcParam());
         builder.append("loadc ");
@@ -23,6 +23,7 @@ public class FunctionCall extends Node {
         builder.append("\n");
         builder.append("loadc 1\n");
         builder.append("store");
+    	builder.append("pop\n");
 
         return builder.toString();
     }

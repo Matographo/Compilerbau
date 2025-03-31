@@ -37,6 +37,7 @@ public class GDeclaration extends Node {
             builder.append("storea ");
             builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(2).generate()));
             builder.append("\n");
+	    builder.append("pop\n");
         } else if(children.get(0).getChildren().get(1).getValue().equals(CodeConstants.IDENTIFIER)) {
             builder.append(children.get(0).getChildren().get(2).generate());
             builder.append("\n");
@@ -44,6 +45,7 @@ public class GDeclaration extends Node {
             builder.append("storea ");
             builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(0).generate()));
             builder.append("\n");
+	    builder.append("pop\n");
         }
         builder.append("pop\n");
         return builder.toString();
