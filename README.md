@@ -48,8 +48,3 @@ cd ..
 ```zsh
 ./compile.sh test1.c test2.c
 ```
-
-        The `debug` option is available
-```zsh
-./compile.sh test1.c test2.c debug
-```
