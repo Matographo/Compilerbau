@@ -11,7 +11,18 @@ public class ValueNode extends Node {
 
     @Override
     public String generate() {
-        return value.substring(1, value.length() - 1);
+        if (value == null || value.isEmpty()) {
+            return "";
+        }
+        
+        // For quoted values (in backticks or double quotes), strip the quotes
+        if ((value.startsWith("`") && value.endsWith("`") && value.length() >= 2) ||
+            (value.startsWith("\"") && value.endsWith("\"") && value.length() >= 2)) {
+            return value.substring(1, value.length() - 1);
+        }
+        
+        // For numeric values, return as is
+        return value;
     }
 
 }
