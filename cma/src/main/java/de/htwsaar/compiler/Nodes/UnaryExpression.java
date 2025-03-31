@@ -43,7 +43,6 @@ public class UnaryExpression extends Node {
 		return switch (type) {
 			case "!" -> "not\n";
 			case "-" -> "neg\n";
-			case "+" -> "pos\n";
 			case "--" -> "sub\n";
 			case "++" -> "add\n";
 			case "*" -> "load\n";
