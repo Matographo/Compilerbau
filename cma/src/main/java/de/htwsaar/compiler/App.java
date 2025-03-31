@@ -16,7 +16,8 @@ public class App {
 	private static final int BUFFER_SIZE = 1024;
 
 	public static void main(String[] args) {
-		args = new String[] { "/home/leodora/Documents/Dev/Uni/Compilerbau/Compilerbau/tree-sitter-cma/testFilec" };
+		System.out.println(args.length + " arguments");
+		// args = new String[] { "/home/leodora/Documents/Dev/Uni/Compilerbau/Compilerbau/tree-sitter-cma/example1" };
 		new App().start(args);
 	}
 
