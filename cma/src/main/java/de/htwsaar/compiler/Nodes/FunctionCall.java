@@ -15,15 +15,10 @@ public class FunctionCall extends Node {
         builder.append("loadc 0\n");
         builder.append("mark\n");
         builder.append(calcParam());
-        builder.append("loadc ");
-        builder.append(getFunctionAdress());
         builder.append("\n");
         builder.append("call ");
         builder.append(getParamSize());
         builder.append("\n");
-        builder.append("loadc 1\n");
-        builder.append("store");
-    	builder.append("pop\n");
 
         return builder.toString();
     }
