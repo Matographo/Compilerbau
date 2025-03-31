@@ -10,15 +10,14 @@ if [ $# -eq 0 ]; then
 fi
 
 # Check if the last argument is "debug"
-DEBUG=false
-if [ "${!#}" == "debug" ]; then
-    DEBUG=true
+DEBUG_MODE=false
+if [ "$#" -gt 0 ] && [ "${!#}" == "debug" ]; then
+    DEBUG_MODE=true
     # Remove the debug flag from arguments
     set -- "${@:1:$(($#-1))}"
 fi
 
-# Build files list for Maven exec
-FILES=""
+# Validate files first
 for FILE in "$@"; do
     # Check if the file exists
     if [ ! -f "$FILE" ]; then
@@ -31,27 +30,25 @@ for FILE in "$@"; do
         echo "Error: $FILE is not a C file (must have .c extension)"
         exit 1
     fi
-    
-    # Get the absolute path of the file
-    ABSOLUTE_PATH=$(realpath "$FILE")
-    
-    # Build the command arguments
-    if [ -z "$FILES" ]; then
-        FILES="\"$ABSOLUTE_PATH\""
-    else
-        FILES="$FILES \"$ABSOLUTE_PATH\""
-    fi
 done
-
-# Print compilation start message
-echo "Compiling: $@"
 
 # Change to the cma directory
 cd "$(dirname "$0")/cma" || { echo "Error: Could not change to cma directory"; exit 1; }
 
-# Run the Maven command
-eval "mvn exec:java -Dexec.mainClass=\"de.htwsaar.compiler.App\" -Dexec.args=$FILES"
+# Process each file individually
+for FILE in "$@"; do
+    # Get the absolute path of the file
+    ABSOLUTE_PATH=$(realpath "../$FILE")
+    
+    # Print compilation start message for this file
+    echo "Compiling: $FILE"
+    
+    # Run the Maven command for this file
+    mvn exec:java -Dexec.mainClass="de.htwsaar.compiler.App" -Dexec.args="$ABSOLUTE_PATH"
+    
+    echo "Compilation of $FILE complete"
+done
 
-echo "Compilation complete"
+echo "All compilations complete"
 echo "CMA files have been created in the same directory as the source files"
 
