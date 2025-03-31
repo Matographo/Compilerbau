@@ -1,4 +1,4 @@
-package de.htwsaar.compilerbau;
+package de.htwsaar.compiler;
 
 import static org.junit.Assert.assertTrue;
 
