@@ -28,9 +28,9 @@ public class BinaryExpression extends Node {
 			case "%" -> "mod";
 			case "==" -> "eq";
 			case "!=" -> "ne";
-			case "<" -> "lt";
+			case "<" -> "le";
 			case "<=" -> "leq";
-			case ">" -> "gt";
+			case ">" -> "gr";
 			case ">=" -> "geq";
 			case "&&" -> "and";
 			case "||" -> "or";

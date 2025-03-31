@@ -1,5 +1,15 @@
 loadc 0
-loadc 5
+loadc 4
+loadc 1
+gr
+loadc 2
+loadc 9
+mul
+add
+loadc 3
+loadc 4
+add
+sub
 storea 0
 pop
 
@@ -15,19 +25,14 @@ loada 0
 
 
 loadc 15
-loadc FP
-loadc 1
-add
+loadrc 1
 store
 
 pop
 
 loada 0
 
-loadc 1
-loadc SP
-add
-load
+loadrc 1
 
 mul
 storer -3

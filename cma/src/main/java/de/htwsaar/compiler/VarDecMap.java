@@ -53,7 +53,7 @@ public class VarDecMap {
 		String functionName = "_f" + key;
 		if (!functionVar.containsKey(key)) {
 			functionVar.put(key, params);
-			if(functionVar.size() == 1) {
+			if (functionVar.size() == 1) {
 				functionName = "mark\nloadc _fmain\ncall\nhalt\n" + functionName;
 			}
 			currentFunction = key;
@@ -89,10 +89,10 @@ public class VarDecMap {
 	}
 
 	public static String getVarDec(String key) {
-		if(globalVar.get(key) != null) {
+		if (globalVar.get(key) != null) {
 			return "loada " + globalVar.get(key) + "\n";
 		} else {
-			return "loadc " + getLocalVar(currentFunction, key) + "\nloadc SP\nadd\nload\n";
+			return "loadrc " + getLocalVar(currentFunction, key) + "\n";
 		}
 	}
 }

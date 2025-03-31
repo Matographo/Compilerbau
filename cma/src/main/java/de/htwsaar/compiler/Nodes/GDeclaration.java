@@ -38,11 +38,11 @@ public class GDeclaration extends Node {
             builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(2).generate()));
             builder.append("\n");
         } else if(children.get(0).getChildren().get(1).getValue().equals(CodeConstants.IDENTIFIER)) {
-            builder.append(children.get(0).getChildren().get(2).generate());
+            builder.append("loadc ");
+            builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(1).generate()));
             builder.append("\n");
-            builder.append("new\n");
             builder.append("storea ");
-            builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(0).generate()));
+            builder.append(VarDecMap.getGlobal(children.get(0).getChildren().get(1).generate()));
             builder.append("\n");
         }
         return builder.toString();
